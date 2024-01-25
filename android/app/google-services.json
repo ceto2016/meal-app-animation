@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "965659840524",
+    "firebase_url": "https://shop-app-b88bb.firebaseio.com",
+    "project_id": "shop-app-b88bb",
+    "storage_bucket": "shop-app-b88bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965659840524:android:51ecf1f214820c74161e29",
+        "android_client_info": {
+          "package_name": "com.ceto.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965659840524-r0djdhfhl56hfqrep4nqh2pbgp4j5r1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeMu7J75Ut5WR3llN1PAGEP1BUpV81r5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965659840524-r0djdhfhl56hfqrep4nqh2pbgp4j5r1h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "965659840524-du48jui1m87b7st8b0k9qdkocfrpgu2d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.reacticeTest"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965659840524:android:3c4dbedaf41a41dd161e29",
+        "android_client_info": {
+          "package_name": "com.example.reactice_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965659840524-r0djdhfhl56hfqrep4nqh2pbgp4j5r1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeMu7J75Ut5WR3llN1PAGEP1BUpV81r5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965659840524-r0djdhfhl56hfqrep4nqh2pbgp4j5r1h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "965659840524-du48jui1m87b7st8b0k9qdkocfrpgu2d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.reacticeTest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
