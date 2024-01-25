@@ -14,79 +14,58 @@ class MealColorContainer extends StatefulWidget {
 }
 
 class _MealColorContainerState extends State<MealColorContainer>
-    with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController.unbounded(vsync: this, duration: 5.seconds)
-      ..repeat(min: -.5, max: 1.5);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
+   {
   @override
   Widget build(BuildContext context) {
-    return Hero(
-        tag: "MealColorContainer+${widget.meal.id}",
-        child: AnimatedBuilder(
-          animation: controller,
-          builder: (_, child) => ShaderMask(
-            shaderCallback: (rect) => LinearGradient(
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft,
-                    transform: _GradTransform(controller.value),
-                    tileMode: TileMode.mirror,
-                    colors: List.generate(
-                        5,
-                        (index) => [
-                              widget.meal.backgroundColor,
-                              widget.meal.backgroundColor.withOpacity(.94),
-                              widget.meal.backgroundColor.withOpacity(.97),
-                              widget.meal.backgroundColor.withOpacity(.97),
-                              widget.meal.backgroundColor.withOpacity(.94),
-                              widget.meal.backgroundColor,
-                            ]).expand((e) => e).toList())
-                .createShader(rect),
-            child: child,
-          ),
+    return Container(
+      margin: const EdgeInsets.all(8),
+      child: Hero(
+          tag: "MealColorContainer+${widget.meal.id}",
+          flightShuttleBuilder: (
+            BuildContext flightContext,
+            Animation<double> animation,
+            HeroFlightDirection flightDirection,
+            BuildContext fromHeroContext,
+            BuildContext toHeroContext,
+          ) {
+            late Widget hero;
+            if (flightDirection == HeroFlightDirection.push) {
+              hero = fromHeroContext.widget;
+            } else {
+              hero = toHeroContext.widget;
+            }
+            return RotationTransition(
+              turns: Tween<double>(begin: 0, end: 1 / 4).animate(animation),
+              child: ScaleTransition(
+                scale: Tween<double>(begin: 1, end: 5).animate(animation),
+                child: hero,
+              ),
+            );
+          },
           child: BlocBuilder<MealsCubit, MealsState>(
             builder: (context, state) {
-              return HeroMode(
-                enabled: false,
-                child: AnimatedContainer(
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  duration: verticalMealContainerHeightExtentSpeed.ms,
-                  height:
-                      state.currentMeal.id == widget.meal.id ? 500.h : 400.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.h),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          widget.meal.backgroundColor.withOpacity(.9),
-                          widget.meal.backgroundColor,
-                        ]),
-                    // color: widget.meal.backgroundColor,
-                  ),
+              return AnimatedContainer(
+                transform: Matrix4.identity()..scale(1.15),
+                transformAlignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                duration: verticalMealContainerHeightExtentSpeed.ms,
+                height: state.currentMeal.id == widget.meal.id ? 450.h : 400.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40.h),
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        widget.meal.backgroundColor.withOpacity(.9),
+                        widget.meal.backgroundColor,
+                      ]),
+                  // color: widget.meal.backgroundColor,
                 ),
+                  
               );
             },
-          ),
-        ));
-  }
-}
-
-class _GradTransform extends GradientTransform {
-  final double value;
-  const _GradTransform(this.value);
-  @override
-  Matrix4? transform(Rect bounds, {TextDirection? textDirection}) {
-    return Matrix4.translationValues(9, -(bounds.height / 5) * value, 35);
+            
+          )),
+    );
   }
 }

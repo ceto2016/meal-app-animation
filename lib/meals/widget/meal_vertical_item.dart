@@ -37,7 +37,7 @@ class MealVerticalItem extends StatelessWidget {
             AnimatedPositioned(
                 duration: dishVerticalSlideSpeed.ms,
                 curve: Curves.easeInOut,
-                top: state.currentMeal.id == meal.id ? 0 : 100.h,
+                top: state.currentMeal.id == meal.id ? 50 : 120.h,
                 child: DishWidget(meal: meal))
           ]),
         );

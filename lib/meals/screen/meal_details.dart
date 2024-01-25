@@ -2,6 +2,7 @@ import 'package:ex/meals/constant.dart';
 import 'package:ex/meals/controller/details_sheet_dart_cubit.dart';
 import 'package:ex/meals/controller/meals_cubit.dart';
 import 'package:ex/meals/model/meal.dart';
+import 'package:ex/meals/widget/shader_mask_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widget/dish_widget.dart';
-import '../widget/meal_color_container.dart';
 
 class MealDetailsScreen extends StatefulWidget {
   const MealDetailsScreen({super.key, required this.meal});
@@ -31,27 +31,24 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
             return true;
           },
           child: Scaffold(
-            body: Stack(alignment: AlignmentDirectional.topStart, children: [
-              Stack(children: [
-                AnimatedContainer(
-                  duration: 1.seconds,
-                  child: Positioned.fill(
-                    left: -MediaQuery.of(context).size.height,
-                    right: -MediaQuery.of(context).size.height,
-                    top: -MediaQuery.of(context).size.height,
-                    bottom: -MediaQuery.of(context).size.height,
-                    child: MealColorContainer(meal: widget.meal)
-                        .animate(delay: colorContainerInDetailsDelay.ms)
-                        .rotate(
-                            end: colorContainerInDetailsRotate,
-                            duration:
-                                colorContainerInDetailsSpeed.milliseconds),
+            backgroundColor: const Color.fromARGB(255, 247, 247, 247),
+            body: ShaderMaskWidget(
+              isDetails: true,
+              child: Stack(alignment: AlignmentDirectional.topStart, children: [
+                Hero(
+                  tag: "MealColorContainer+${widget.meal.id}",
+                  child: Container(
+                    transform: Matrix4.identity()..scale(1.5),
+                    transformAlignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: widget.meal.backgroundColor,
+                    ),
                   ),
-                )
-              ]),
+                ),
+               
               const SafeArea(
                 child: BackButton(
-                  color: Colors.white,
+                    color: Colors.white,
                 ),
               ),
               DishInDetailsWidget(meal: widget.meal),
@@ -62,6 +59,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
                 child: MealDetailsBottomSheet(meal: widget.meal),
               )
             ]),
+            ),
           ),
         );
       }),
@@ -225,7 +223,7 @@ class _MealDetailsBottomSheetState extends State<MealDetailsBottomSheet>
                       const SizedBox(height: 8),
                       Text(("${widget.meal.description}\n") * 2,
                           style: TextStyle(
-                              color: Colors.grey.shade600.withOpacity(.6),
+                              color: Colors.grey.withOpacity(.6),
                               height: 2,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400)),

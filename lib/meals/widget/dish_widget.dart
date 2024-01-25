@@ -85,13 +85,41 @@ class DishItem extends StatelessWidget {
       enabled: true,
       child: Hero(
           tag: meal.id,
+          flightShuttleBuilder: (
+            BuildContext flightContext,
+            Animation<double> animation,
+            HeroFlightDirection flightDirection,
+            BuildContext fromHeroContext,
+            BuildContext toHeroContext,
+          ) {
+            late Widget hero;
+            if (flightDirection == HeroFlightDirection.push) {
+              hero = fromHeroContext.widget;
+            } else {
+              hero = toHeroContext.widget;
+            }
+            return RotationTransition(
+              turns: Tween<double>(begin: 0, end: 1).animate(animation),
+              child: ScaleTransition(
+                  scale: Tween<double>(begin: 1, end: 1.25).animate(animation),
+                  child: hero),
+            );
+          },
           child: Container(
+            transformAlignment: Alignment.center,
             alignment: Alignment.center,
-            child: PhysicalShape(
-                color: Colors.transparent,
-                shadowColor: Colors.black.withOpacity(.2),
-                elevation: 12,
-                clipper: const ShapeBorderClipper(shape: CircleBorder()),
+            child: DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF1C1C1C).withOpacity(.2),
+                      blurRadius: 30,
+                      offset:
+                          const Offset(0, 2 + 5), // changes position of shadow
+                    ),
+                  ],
+                ),
                 child: Image.asset(
                   meal.imageUrl,
                   height: size + 30.h,
